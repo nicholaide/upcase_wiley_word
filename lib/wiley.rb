@@ -1,6 +1,6 @@
 class WileySquare
   require 'algorithms'
-  require 'word_read.rb' 
+  require 'word_reader.rb' 
   
   =begin
     first implementation
@@ -23,12 +23,18 @@ class WileySquare
 
   def find_square
     word_list = WorkReader.read_lines_with_word_size(@file_name, @word_size)
-    populate_trie(word_list) unless word_list.empty?
+    if word_list.nil? or word_list.empty?
+      return "Cannot find words with that size"
+    elsif word_list.size < @word_size
+      return "Not enough words to make a square of size #{@word_size}"
+    end
+    
+    populate_trie(word_list)
   end
     
   private  
-    def populate_trie
-      
+    def populate_trie(word_list)
+      word_list.map { |w| @trie.push(w,w)}
     end
 
 end
