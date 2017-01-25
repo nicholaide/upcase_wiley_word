@@ -4,6 +4,7 @@ class WileySquare
   
   EMPTY_LIST = "Unable to get info from dictionary".freeze
   NOT_ENOUGH = "Not enough words to work with".freeze  
+  NO_SQUARE = "No square found".freeze  
   
      
 #     first implementation
@@ -32,12 +33,31 @@ class WileySquare
       return NOT_ENOUGH
     end
     
-    populate_trie(word_list)
+    @word_list = word_list
+    populate_trie()
+    
+    @word_list.each do |word|
+      a_wiley_square =  construct_square_with(word) 
+      if a_wiley_square.empty?
+        next
+      elsif
+        a_wiley_square # probably some formatting
+      end
+      
+    end
+    
+    return NO_SQUARE
   end
     
   private  
-    def populate_trie(word_list)
-      word_list.map { |w| @trie.push(w,w)}
+  
+    def populate_trie
+      @word_list.map { |w| @trie.push(w,w)}
+    end
+    
+    # return empty array if cannot find a square
+    def construct_square_with(starting_word)
+      return []
     end
 
 end
