@@ -57,6 +57,11 @@ class WileySquare
     
     # return empty array if cannot find a square
     def construct_square_with(starting_word)
+      # find keys (words) that matches the second letter of the starting word_size
+      results = @trie.wildcard("#{starting_word[1]}**")
+      
+      
+      
       return []
     end
 
