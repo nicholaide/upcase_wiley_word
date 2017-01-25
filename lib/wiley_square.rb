@@ -2,13 +2,16 @@ class WileySquare
   require 'algorithms'
   require 'word_reader.rb' 
   
-  =begin
-    first implementation
-    - read .lst file
-    - only get words with certian length
-    - do a push ("word", "word")
-    - use wildcard to find matching words
-  =end
+  EMPTY_LIST = "Unable to get info from dictionary".freeze
+  NOT_ENOUGH = "Not enough words to work with".freeze  
+  
+     
+#     first implementation
+#     - read .lst file
+#     - only get words with certian length
+#     - do a push ("word", "word")
+#     - use wildcard to find matching words
+
   
   def self.create_square(file_name, word_size)
     wiley = WileySquare.new(file_name, word_size)
@@ -22,11 +25,11 @@ class WileySquare
   end
 
   def find_square
-    word_list = WorkReader.read_lines_with_word_size(@file_name, @word_size)
+    word_list = WordReader.read_words_with_size(@file_name, @word_size)
     if word_list.nil? or word_list.empty?
-      return "Cannot find words with that size"
+      return EMPTY_LIST
     elsif word_list.size < @word_size
-      return "Not enough words to make a square of size #{@word_size}"
+      return NOT_ENOUGH
     end
     
     populate_trie(word_list)
