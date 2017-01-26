@@ -26,13 +26,23 @@ describe "WileySquare" do
    expect(wiley).to eq(WileySquare::NOT_ENOUGH)
   end
   
+  
+  # B I T
+  # I C E
+  # T E A
+  
   it "returns an error message if a square can't be found" do
     allow(WordReader).to receive(:read_words_with_size).with("some_list.lst", 3).and_return(["ice", "bit", "him"])
     wiley = WileySquare.create_square("some_list.lst", 3)
     
     expect(wiley).to eq(WileySquare::NO_SQUARE)
-    
-    
   end
+  
+  it "returns an array of words if square can be formed" do
+    allow(WordReader).to receive(:read_words_with_size).with("some_list.lst", 3).and_return(["bit", "ice", "tea"])
+    wiley = WileySquare.create_square("some_list.lst", 3)
+    
+    expect(wiley).to eq(["bit", "ice", "tea"])
+  end  
   
 end

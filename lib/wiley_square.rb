@@ -40,8 +40,8 @@ class WileySquare
       a_wiley_square =  construct_square_with(word) 
       if a_wiley_square.empty?
         next
-      elsif
-        a_wiley_square # probably some formatting
+      else
+        return a_wiley_square # probably some formatting
       end
       
     end
@@ -56,12 +56,26 @@ class WileySquare
     end
     
     # return empty array if cannot find a square
+    # make this work for 3 letters first
     def construct_square_with(starting_word)
       # find keys (words) that matches the second letter of the starting word_size
+      # need to incorporate word_size here
       results = @trie.wildcard("#{starting_word[1]}**")
+      p starting_word
+      p results
+      return [] if results.empty? 
       
-      
-      
+      results.each do |res|
+        # check if there is another key that matches 3rd letter of first word, and 3rd letter of second word
+        third_word = @trie.wildcard("#{starting_word[2]}#{res[2]}*").first
+        
+        p "this is 3rd word #{third_word}"
+        if third_word
+          return [starting_word, res, third_word]  # found a square
+        else
+          next
+        end
+      end
       return []
     end
 
