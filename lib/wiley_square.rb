@@ -26,6 +26,7 @@ class WileySquare
   end
 
   def find_square
+    # add check for minimum of two
     word_list = WordReader.read_words_with_size(@file_name, @word_size)
     if word_list.nil? or word_list.empty?
       return EMPTY_LIST
@@ -38,10 +39,10 @@ class WileySquare
     
     @word_list.each do |word|
       a_wiley_square =  construct_square_with(word) 
-      if a_wiley_square.empty?
+      if a_wiley_square.empty? || a_wiley_square.size < @word_size
         next
       else
-        return a_wiley_square # probably some formatting
+        return a_wiley_square # probably need some formatting
       end
     end
     
@@ -49,6 +50,12 @@ class WileySquare
   end
     
   private  
+  
+  
+# C A R D	
+# A R E A
+# R E A	R 
+# D A R T	  
   
     def populate_trie
       @word_list.map { |w| @trie.push(w,w)}
@@ -58,25 +65,48 @@ class WileySquare
     # make this work for 3 letters first    
     def construct_square_with(starting_word)
       # find keys (words) that matches the second letter of the starting word_size
-      # need to incorporate word_size here
-      results = @trie.wildcard("#{starting_word[1]}**")
-      p starting_word
-      p results
-      return [] if results.empty? 
       
-      results.each do |res|
-        # check if there is another key that matches 3rd letter of first word, and 3rd letter of second word
-        third_word = @trie.wildcard("#{starting_word[2]}#{res[2]}*").first
-        
-        p "this is 3rd word #{third_word}"
-        if third_word
-          return [starting_word, res, third_word]  # found a square
-        else
-          next
-        end
+      # need to incorporate word_size here and check for size
+      position = 2
+      words_array = [starting_word]
+      second_words = find_words_for_position(words_array, position)
+      
+      second_words.each |s_word|
+        candidate_square = _construct_square_with(words_array.dup.concat(s_word), position + 1)
+        return candidate_square if candidate_square.size == @word_size
+        next
       end
       
       return []
     end
+    
+    # returns a complete square
+    def _construct_square_with(word_array, position)
+      possible_words = find_words_for_position(words_array, position)
+      
+      # need to check for size
+      possible_words.each |p_word|
+        candidate_square = _construct_square_with(words_array.dup.concat(s_word), position + 1)
+      end
+    end
+    
+    
+    
+    
+    # find keys (words) for position 'pos' in the square
+    # each position has its own logic for wilcard chars allowed 
+    # ex. for 2nd words, need to be given first chars
+    # ex. for 3rd words, need to be given chars in position 0, 1    
+    def find_words_for_position(words_array, pos)
+      index = pos - 1
+      prefix = words.array.first[index])
+      
+      words_array[1..-1].each do |word|
+        prefix.concat(word[index])
+      end      
+      
+      return @trie.wildcard("#{prefix}#{'*' * (@word_size - index)}")
+    end
+    
 
 end
