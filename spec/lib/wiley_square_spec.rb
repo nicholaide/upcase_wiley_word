@@ -65,5 +65,31 @@ describe "WileySquare" do
     expect(wiley).to eq(["card", "area", "rear", "dart"])
   end     
   
+  it "returns an array of words if square can be formed - simple 5 words " do
+    allow(WordReader).to receive(:read_words_with_size).with("some_list.lst", 5).and_return(["trend", "abuse","heart", "ember", "resin"])
+    wiley = WileySquare.create_square("some_list.lst", 5)
+    
+    expect(wiley).to eq(["heart", "ember", "abuse", "resin", "trend"])
+  end     
+  
+  # no mocks, testing against real dictionary
+  it "returns an array of words if square can be formed - words from dictionary " do
+    wiley = WileySquare.create_square("../../lib/words.lst", 5)
+    
+    expect(wiley).to eq(["aalii", "abash", "lazar", "isawa", "ihram"])
+  end     
+  
+  it "returns an array of words if square can be formed - words from dictionary " do
+    wiley = WileySquare.create_square("../../lib/words.lst", 6)
+    
+    expect(wiley).to eq(["ababua", "babery", "abidal", "bedene", "uranus", "ayless"])
+  end     
+  
+  it "returns an array of words if square can be formed - words from dictionary " do
+    wiley = WileySquare.create_square("../../lib/words.lst", 7)
+    
+    expect(wiley).to eq(["aaronic", "acerate", "revisal", "orifice", "nasitis", "itacist", "celesta"])
+  end   
+  
     
 end

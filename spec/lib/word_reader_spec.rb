@@ -27,4 +27,9 @@ describe "Word Reader" do
     expect(results.size).to eq(0)
   end
   
+    it "reading the given dictionary for words of size 24" do
+    results = WordReader.read_words_with_size("../../lib/words.lst", 24)
+    expect(results.size).to eq(5)
+  end
+  
 end
