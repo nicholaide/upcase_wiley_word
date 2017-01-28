@@ -12,6 +12,11 @@ describe "Word Reader" do
     expect(results.size).to eq(3)    
   end
   
+  it "returns an array of words with size of 3" do 
+    results = WordReader.read_words_with_size("../../spec/lib/sample_words.lst", 3)
+    expect(results.size).to eq(5)    
+  end  
+  
   it "returns nil on error" do
     results = WordReader.read_words_with_size("../../spec/lib/does_not_exist.lst", 5)
     expect(results).to eq(nil)

@@ -44,11 +44,26 @@ describe "WileySquare" do
     expect(wiley).to eq(WileySquare::NO_SQUARE)
   end
   
-  it "returns an array of words if square can be formed" do
+  it "returns an array of words if square can be formed - simple 3 words" do
     allow(WordReader).to receive(:read_words_with_size).with("some_list.lst", 3).and_return(["bit", "ice", "tea"])
     wiley = WileySquare.create_square("some_list.lst", 3)
     
     expect(wiley).to eq(["bit", "ice", "tea"])
   end  
+  
+  it "returns an array of words if square can be formed - more complex 3 words " do
+    allow(WordReader).to receive(:read_words_with_size).with("some_list.lst", 3).and_return(["zoo", "fit", "bit", "ice", "tea"])
+    wiley = WileySquare.create_square("some_list.lst", 3)
+    
+    expect(wiley).to eq(["fit", "ice", "tea"])
+  end    
+  
+  it "returns an array of words if square can be formed - simple 4 words " do
+    allow(WordReader).to receive(:read_words_with_size).with("some_list.lst", 4).and_return(["card", "area", "dart", "rear", "good"])
+    wiley = WileySquare.create_square("some_list.lst", 4)
+    
+    expect(wiley).to eq(["card", "area", "rear", "dart"])
+  end     
+  
     
 end

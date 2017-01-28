@@ -39,7 +39,7 @@ class WileySquare
     
     @word_list.each do |word|
       a_wiley_square =  construct_square_with(word) 
-      if a_wiley_square.empty? || a_wiley_square.size < @word_size
+      if a_wiley_square.size < @word_size
         next
       else
         return a_wiley_square # probably need some formatting
@@ -50,12 +50,10 @@ class WileySquare
   end
     
   private  
-  
-  
-# C A R D	
-# A R E A
-# R E A	R 
-# D A R T	  
+    # C A R D	
+    # A R E A
+    # R E A	R 
+    # D A R T	  
   
     def populate_trie
       @word_list.map { |w| @trie.push(w,w)}
@@ -66,46 +64,65 @@ class WileySquare
     def construct_square_with(starting_word)
       # find keys (words) that matches the second letter of the starting word_size
       
-      # need to incorporate word_size here and check for size
-      position = 2
       words_array = [starting_word]
-      second_words = find_words_for_position(words_array, position)
-      
-      second_words.each |s_word|
-        candidate_square = _construct_square_with(words_array.dup.concat(s_word), position + 1)
-        return candidate_square if candidate_square.size == @word_size
-        next
-      end
-      
-      return []
+      return _construct_square_with(words_array, 2)
     end
     
     # returns a complete square
-    def _construct_square_with(word_array, position)
+    def _construct_square_with(words_array, position)
       possible_words = find_words_for_position(words_array, position)
       
-      # need to check for size
-      possible_words.each |p_word|
-        candidate_square = _construct_square_with(words_array.dup.concat(s_word), position + 1)
+      if position == @word_size and !possible_words.empty?
+        return words_array.concat([possible_words.first]) # we found a square!
+      elsif possible_words.empty?
+        return words_array # return an incomplete square
+      else
+        possible_words.each do |p_word|
+          temp_array = words_array.dup.concat([p_word])          
+          if check_trie(temp_array, position)
+            candidate_square = _construct_square_with(temp_array, position + 1) 
+            return candidate_square if candidate_square.size == @word_size
+          end
+          next
+        end 
       end
+      
+      return words_array # return an incomplete square
     end
     
-    
-    
-    
+        
     # find keys (words) for position 'pos' in the square
     # each position has its own logic for wilcard chars allowed 
     # ex. for 2nd words, need to be given first chars
     # ex. for 3rd words, need to be given chars in position 0, 1    
     def find_words_for_position(words_array, pos)
       index = pos - 1
-      prefix = words.array.first[index])
+      prefix = words_array.first[index]
       
       words_array[1..-1].each do |word|
         prefix.concat(word[index])
       end      
       
       return @trie.wildcard("#{prefix}#{'*' * (@word_size - index)}")
+    end
+    
+    # check the words so far for viability of adding more words to form a square
+    # postion is the last position filled
+    # for example, if [CARD, AREA] are in words, need to check trie for words 
+    # that start with RE** and DA** for a 4-word square
+    def check_trie(words, position)
+      wildcards = "*" * (@word_size - position)
+      
+      (position...@word_size).each do |c| 
+        # get the chars from each word for each position, concat them, and test the trie
+        prefix = ""
+        words.each do |word|
+          prefix.concat(word[c])
+        end
+        return false if @trie.wildcard("#{prefix}#{wildcards}").empty?
+      end
+      
+      return true
     end
     
 
