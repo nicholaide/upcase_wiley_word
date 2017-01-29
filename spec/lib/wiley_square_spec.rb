@@ -73,23 +73,30 @@ describe "WileySquare" do
   end     
   
   # no mocks, testing against real dictionary
-  it "returns an array of words if square can be formed - words from dictionary " do
+  it "returns an array of words if 5x5 can be formed - words from dictionary " do
     wiley = WileySquare.create_square("../../lib/words.lst", 5)
     
     expect(wiley).to eq(["aalii", "abash", "lazar", "isawa", "ihram"])
   end     
   
-  it "returns an array of words if square can be formed - words from dictionary " do
+  it "returns an array of words if 6x6 can be formed - words from dictionary " do
     wiley = WileySquare.create_square("../../lib/words.lst", 6)
     
     expect(wiley).to eq(["ababua", "babery", "abidal", "bedene", "uranus", "ayless"])
   end     
   
-  it "returns an array of words if square can be formed - words from dictionary " do
+  it "returns an array of words if 7x7 can be formed - words from dictionary " do
     wiley = WileySquare.create_square("../../lib/words.lst", 7)
     
     expect(wiley).to eq(["aaronic", "acerate", "revisal", "orifice", "nasitis", "itacist", "celesta"])
   end   
+  
+  it "returns an array of words if 8x8 can be formed - words from dictionary " do
+    wiley = WileySquare.create_square("../../lib/words.lst", 8)
+    
+    expect(wiley).to eq(["aaronic", "acerate", "revisal", "orifice", "nasitis", "itacist", "celesta"])
+    # ["acetated", "cadinene", "edentate", "tindered", "antehall", "tearable", "entellus", "deedless"]
+  end     
   
     
 end
