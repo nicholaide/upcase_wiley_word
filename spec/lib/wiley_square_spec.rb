@@ -94,8 +94,7 @@ describe "WileySquare" do
   it "returns an array of words if 8x8 can be formed - words from dictionary " do
     wiley = WileySquare.create_square("../../lib/words.lst", 8)
     
-    expect(wiley).to eq(["aaronic", "acerate", "revisal", "orifice", "nasitis", "itacist", "celesta"])
-    # ["acetated", "cadinene", "edentate", "tindered", "antehall", "tearable", "entellus", "deedless"]
+    expect(wiley).to eq(["acetated", "cadinene", "edentate", "tindered", "antehall", "tearable", "entellus", "deedless"])
   end     
   
     
