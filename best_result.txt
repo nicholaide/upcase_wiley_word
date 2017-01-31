@@ -1,4 +1,6 @@
-# 7x7 @ 4.98 seconds
+# 2009 MacBook Pro, Mavericks, 2.26 GHz Intel Core 2 Duo
+
+# 7x7 @ 4.98 seconds (RSpec measurement)
 A A R O N I C 
 A C E R A T E 
 R E V I S A L 

@@ -1,19 +1,18 @@
 class WileySquare
+  
+  # example word square
+  # C A R D	
+  # A R E A
+  # R E A	R 
+  # D A R T	    
+  
   require 'algorithms'
   require 'word_reader.rb' 
   
   EMPTY_LIST = "Unable to get info from dictionary".freeze
   NOT_ENOUGH = "Not enough words to work with".freeze  
   NO_SQUARE = "No square found".freeze  
-  
-     
-#     first implementation
-#     - read .lst file
-#     - only get words with certian length
-#     - do a push ("word", "word")
-#     - use wildcard to find matching words
-
-  
+    
   def self.create_square(file_name, word_size)
     wiley = WileySquare.new(file_name, word_size)
     wiley.find_square
@@ -50,17 +49,12 @@ class WileySquare
   end
     
   private  
-    # C A R D	
-    # A R E A
-    # R E A	R 
-    # D A R T	  
+
   
     def populate_trie
       @word_list.map { |w| @trie.push(w,w)}
     end
-    
-    # return empty array if cannot find a square
-    # make this work for 3 letters first    
+     
     def construct_square_with(starting_word)
       # find keys (words) that matches the second letter of the starting word_size
       
@@ -68,12 +62,11 @@ class WileySquare
       return _construct_square_with(words_array, 2)
     end
     
-    # returns a complete square
     def _construct_square_with(words_array, position)
       possible_words = find_words_for_position(words_array, position)
       
       if position == @word_size and !possible_words.empty?
-        return words_array.concat([possible_words.first]) # we found a square!
+        return words_array.concat([possible_words.first]) # we found a square
       elsif possible_words.empty?
         return words_array # return an incomplete square
       else

@@ -1,6 +1,5 @@
 # reads a file that contains a list of dictionary words
-# returns an array of strings having size n 
-
+# returns an array of strings having size N 
 class WordReader
   
   def self.read_words_with_size(file_name, word_size)
